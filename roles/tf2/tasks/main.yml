@@ -44,6 +44,16 @@
     src: admins_simple.ini.j2
     dest: ~/serverfiles/tf/addons/sourcemod/configs/admins_simple.ini
 
+- name: mapcycle.txt
+  template:
+    src: mapcycle.txt
+    dest: ~/serverfiles/tf/cfg/mapcycle.txt
+
+- name: motd.txt
+  template:
+    src: motd.txt
+    dest: ~/serverfiles/tf/cfg/motd.txt
+
 - name: tf/cfg/mapcycle.txt
   copy:
     src: tf/cfg/mapcycle.txt

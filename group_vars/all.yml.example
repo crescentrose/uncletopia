@@ -1,13 +1,59 @@
+ssh_keys:
+  - "ssh-ed25519 ..."
+
+# Enable or disable Discord Log Relay
+# https://github.com/leighmacdonald/discord_log_relay
+discord_log_relay: off
+lgsm_webhook_url: "https://discordapp.com/api/webhooks/1111111111111111111/xxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxx"
+discord_log_relay_host: "hostname:7777"
+
+# Enable or disable GBans
+# https://github.com/leighmacdonald/gbans
+gbans: off
 gbans_host: "https://gbans.example.com"
 gbans_port: "443"
-server_password: ""
-rcon_password: "set_your_rcon_password"
-fastdl_url: "https://example.com/tf/"
-sv_tags: "Uncletopia,nocrits,nodmgspread"
+
+# Cvars used by TF2
+server_password: "" # Leave blank for no password
+rcon_password: "REPLACE_ME"
+sv_tags: "nocrits,nodmgspread"
 sv_pure: 1
-lgsm_webhook_enabled: "on"
-lgsm_webhook_url: https://discordapp.com/api/webhooks/1111111111111111111/xxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxx
-discord_log_relay_host: "hostname:7777"
-ssh_keys: |
-  ssh-rsa xxxxxxxxxxxxxxxxxxx key-2017"
-  ssh-rsa xxxxxxxxxxxxxxxxxxx key-2020"
+sv_region: 0 # Probably not necessary anymore
+
+# It's not very up-to-date but it's what we have without setting up a bunch of
+# extra stuff. Use yours if you have one.
+fastdl_url: "http://dl.openfastdl.net/tf"
+
+# Access management
+sm_permissions:
+  - ['STEAM_0:1:...', '99:z', ''] # Your admin user
+
+map_rotation:
+  - cp_dustbowl
+  - cp_gorge
+  - cp_metalworks
+  - cp_mossrock
+  - cp_mountainlab
+  - cp_process_final
+  - cp_snakewater_final1
+  - cp_steel
+  - cp_sunshine
+  - koth_badlands
+  - koth_highpass
+  - koth_king
+  - koth_lakeside_final
+  - koth_sawmill
+  - koth_suijin
+  - koth_viaduct
+  - pl_pier
+  - pl_badwater
+  - pl_barnblitz
+  - pl_borneo
+  - pl_frontier_final
+  - pl_snowycoast
+  - pl_swiftwater_final1
+  - pl_thundermountain
+  - pl_upward
+
+motd: |
+  This is your TF2 server. Remember to write something creative here.

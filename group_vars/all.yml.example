@@ -1,12 +1,6 @@
 ssh_keys:
   - "ssh-ed25519 ..."
 
-# Enable or disable Discord Log Relay
-# https://github.com/leighmacdonald/discord_log_relay
-discord_log_relay: off
-lgsm_webhook_url: "https://discordapp.com/api/webhooks/1111111111111111111/xxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxx"
-discord_log_relay_host: "hostname:7777"
-
 # Enable or disable GBans
 # https://github.com/leighmacdonald/gbans
 gbans: off

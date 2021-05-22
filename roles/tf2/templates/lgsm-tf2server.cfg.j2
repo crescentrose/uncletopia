@@ -1,7 +1,9 @@
 gslt="{{ gslt }}"
 defaultmap="pl_badwater"
 maxplayers="32"
-
-discordalert="{{ lgsm_webhook_enabled }}"
-discordwebhook="{{ lgsm_webhook_url }}"
 stats="on"
+
+{% if discord_log_relay %}
+	discordalert="{{ lgsm_webhook_enabled }}"
+	discordwebhook="{{ lgsm_webhook_url }}"
+{% endif %}

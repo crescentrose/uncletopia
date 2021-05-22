@@ -95,6 +95,7 @@
 - name: discord_log_relay download
   become: yes
   become_user: tf2server
+  when: discord_log_relay
   unarchive:
     src: https://github.com/leighmacdonald/discord_log_relay/releases/download/v1.0.2/discord_log_relay-v1.0.2-linux64.zip
     dest: ~/
@@ -102,12 +103,14 @@
 
 - name: discord_log_relay.service
   become: yes
+  when: discord_log_relay
   template:
     src: discord_log_relay.service.j2
     dest: /etc/systemd/system/discord_log_relay.service
     mode: '644'
 
 - name: mkdir gbans
+  when: gbans
   become: yes
   become_user: tf2server
   file:
@@ -116,6 +119,7 @@
     mode: '0755'
 
 - name: gbans download
+  when: gbans
   become: yes
   become_user: tf2server
   unarchive:
@@ -124,6 +128,7 @@
     remote_src: yes
 
 - name: gbans-relay.service
+  when: gbans
   become: yes
   template:
     src: gbans-relay.service.j2
@@ -131,11 +136,13 @@
     mode: '644'
 
 - name: gbans chmod
+  when: gbans
   file:
     path: /home/tf2server/gbans/gbans
     mode: 0755
 
 - name: gbans.yml
+  when: gbans
   become: yes
   template:
     src: gbans.yml.j2
@@ -161,6 +168,7 @@
     enabled: yes
 
 - name: systemd enable discord_log_relay
+  when: discord_log_relay
   become: yes
   systemd:
     name: discord_log_relay.service
@@ -168,6 +176,7 @@
     state: restarted
 
 - name: systemd enable gbans-relay
+  when: gbans
   become: yes
   systemd:
     name: gbans-relay.service

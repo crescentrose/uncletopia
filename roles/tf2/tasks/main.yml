@@ -85,6 +85,7 @@
     dest: lgsm/config-lgsm/tf2server/tf2server.cfg
 
 - name: tf/addons/sourcemod/configs/gbans.cfg
+  when: gbans
   template:
     src: gbans.cfg.j2
     dest: ~/serverfiles/tf/addons/sourcemod/configs/gbans.cfg

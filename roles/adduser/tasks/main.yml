@@ -6,6 +6,12 @@
     upgrade: yes
     cache_valid_time: 0
 
+- name: apt install ufw rsync
+  become: yes
+  apt:
+    name: ufw rsync tar unzip
+    state: present
+
 - name: addgroup tf2
   become: yes
   group:

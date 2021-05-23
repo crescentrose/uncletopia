@@ -1,3 +1,37 @@
+- name: Check if any mod files need to be downloaded
+  stat:
+    path: "serverfiles/{{ item | basename }}"
+  loop: "{{ mods }}"
+  register: existing_mods
+
+# additional check in case we crashed before the untar step somehow
+- name: Check if Metamod VDF exists
+  stat:
+    path: "serverfiles/tf/addons/metamod.vdf"
+  register: metamod_vdf
+
+- name: Download mod files
+  get_url:
+    url: "{{ item }}"
+    dest: "serverfiles/"
+  register: downloaded_mods
+  when: not existing_mods.results[i].stat.exists
+  loop: "{{ mods }}"
+  loop_control:
+    index_var: i
+
+- name: Untar mod files
+  command:
+    chdir: serverfiles/tf
+    cmd: "tar -xvf ../{{ item.item | basename }}"
+    warn: false # unarchive doesn't work with these archives for some reason
+  # This will skip the untar step if the archives already exist on the server
+  # and they were unchanged. So, when you update, it _should_ detect that new
+  # archives have been created and untar them.
+  when: "'skipped' not in item or not metamod_vdf.stat.exists"
+  loop: "{{ downloaded_mods.results }}"
+
+# Configure TF2
 - name: tf/cfg/sourcemod/
   synchronize:
     src: tf/cfg/sourcemod
@@ -6,20 +40,6 @@
     group: false
     recursive: true
     delete: true
-
-- name: tf/addons/
-  synchronize:
-    src: tf/addons/
-    dest: serverfiles/tf/addons/
-    owner: false
-    group: false
-    recursive: true
-    delete: true
-    rsync_opts:
-      - "--exclude=*.log"
-      - "--exclude=sourcemod/logs/"
-      - "--exclude=sourcemod/configs/gbans.cfg"
-      - "--exclude=sourcemod/configs/admins_simple.ini"
 
 - name: cfg/mapconfig/
   synchronize:
@@ -46,19 +66,13 @@
 
 - name: mapcycle.txt
   template:
-    src: mapcycle.txt
+    src: mapcycle.txt.j2
     dest: ~/serverfiles/tf/cfg/mapcycle.txt
 
 - name: motd.txt
   template:
-    src: motd.txt
+    src: motd.txt.j2
     dest: ~/serverfiles/tf/cfg/motd.txt
-
-- name: tf/cfg/mapcycle.txt
-  copy:
-    src: tf/cfg/mapcycle.txt
-    dest: ~/serverfiles/tf/cfg/mapcycle.txt
-    mode: 0660
 
 - name: tf/cfg/mapcycle_halloween.txt
   copy:
@@ -70,12 +84,6 @@
   copy:
     src: tf/cfg/pure_server_whitelist.txt
     dest: ~/serverfiles/tf/cfg/pure_server_whitelist.txt
-    mode: 0660
-
-- name: tf/cfg/motd.txt
-  copy:
-    src: tf/cfg/motd.txt
-    dest: ~/serverfiles/tf/cfg/motd.txt
     mode: 0660
 
 - name: tf/cfg/cronjobs.txt

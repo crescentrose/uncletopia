@@ -32,6 +32,29 @@
   loop: "{{ downloaded_mods.results }}"
 
 # Configure TF2
+- name: tf/addons/sourcemod
+  synchronize:
+    src: "tf/addons/sourcemod/{{ item }}"
+    dest: "serverfiles/tf/addons/sourcemod/{{ item }}"
+    owner: false
+    group: false
+    recursive: true
+    delete: true
+  loop:
+    # we need to preserve these directories, sucks but it's life
+    - "scripting"
+    - "plugins"
+    - "data"
+
+# these should be complemented, not overwritten
+- name: tf2/addons/sourcemod/translations
+  synchronize:
+    src: tf/addons/sourcemod/translations
+    dest: serverfiles/tf/addons/sourcemod/translations
+    owner: false
+    group: false
+    recursive: true
+
 - name: tf/cfg/sourcemod/
   synchronize:
     src: tf/cfg/sourcemod

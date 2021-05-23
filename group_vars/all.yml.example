@@ -1,3 +1,8 @@
+# SourceMod/MetaMod versions
+mods:
+  - "https://mms.alliedmods.net/mmsdrop/1.11/mmsource-1.11.0-git1144-linux.tar.gz"
+  - "https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6502-linux.tar.gz"
+
 gbans_host: "https://gbans.example.com"
 gbans_port: "443"
 server_password: ""

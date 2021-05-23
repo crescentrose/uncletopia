@@ -93,14 +93,7 @@
     mode: '644'
 
 - name: mkdir gbans
-  become: yes
-  become_user: tf2server
-  file:
-    path: ~/gbans
-    state: directory
-    mode: '0755'
-
-- name: mkdir gbans
+  when: gbans
   become: yes
   become_user: tf2server
   file:
@@ -109,6 +102,7 @@
     mode: '0755'
 
 - name: gbans download
+  when: gbans
   become: yes
   become_user: tf2server
   unarchive:
@@ -117,6 +111,7 @@
     remote_src: yes
 
 - name: gbans-relay.service
+  when: gbans
   become: yes
   template:
     src: gbans-relay.service.j2
@@ -124,11 +119,13 @@
     mode: '644'
 
 - name: gbans chmod
+  when: gbans
   file:
     path: /home/tf2server/gbans/gbans
     mode: 0755
 
 - name: gbans.yml
+  when: gbans
   become: yes
   template:
     src: gbans.yml.j2
@@ -154,6 +151,7 @@
     enabled: yes
 
 - name: systemd enable gbans-relay
+  when: gbans
   become: yes
   systemd:
     name: gbans-relay.service

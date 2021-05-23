@@ -24,7 +24,9 @@ sv_lan 0
 sv_region {{ sv_region }}
 
 // Custom maps
+{% if fastdl_url is defined %}
 sv_downloadurl "{{ fastdl_url }}"
+{% endif %}
 sv_allowupload 1
 sv_allowdownload 1
 
